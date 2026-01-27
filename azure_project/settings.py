@@ -98,7 +98,8 @@ DATABASES = {
 
 
 # MongoDB Configuration
-MONGO_URI = 'mongodb://localhost:27017/'
+# MONGO_URI = 'mongodb://localhost:27017/'
+MONGO_URI = 'mongodb+srv://bearlab:P@ss1234@bearlab-mongodb.global.mongocluster.cosmos.azure.com/?tls=true&authMechanism=SCRAM-SHA-256&retrywrites=false&maxIdleTimeMS=120000'
 MONGO_DB_NAME = 'django_store_reviews'
 
 # Password validation
