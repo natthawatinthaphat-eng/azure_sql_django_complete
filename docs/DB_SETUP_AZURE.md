@@ -136,6 +136,76 @@ SELECT
     u.username as Customer, 
     o.status, 
     o.created_at 
+    o.created_at 
 FROM api_order o
 JOIN auth_user u ON o.user_id = u.id;
 ```
+
+---
+
+## 4. Querying Data (Azure Cosmos DB)
+
+Since your Cosmos DB is using the MongoDB API (vCore), **Azure Portal Data Explorer may not support listing documents directly**. You should use external tools or the Mongo Shell.
+
+### Option A: MongoDB Compass (Desktop GUI) - Recommended
+1. Download and install **[MongoDB Compass](https://www.mongodb.com/products/tools/compass)**.
+2. Open Compass.
+3. In the **New Connection** field, paste your **Primary Connection String** (the same one used in `MONGO_URI`).
+4. Click **Connect**.
+5. You will see `django_store_reviews` in the left sidebar. Click it to view, query, and edit data visually.
+
+### Option B: Mongo Shell (`mongosh`)
+1. Install `mongosh` on your machine.
+2. Run the connection command:
+   ```bash
+   mongosh "mongodb+srv://bearlab:P@ss1234@bearlab-mongodb.global.mongocluster.cosmos.azure.com/?tls=true&authMechanism=SCRAM-SHA-256&retrywrites=false&maxIdleTimeMS=120000"
+   ```
+3. Once connected, switch to the db and query:
+   ```javascript
+   use django_store_reviews
+   db.reviews.find()
+   ```
+
+### Option C: Monitoring with Mongosh
+
+Since you are using the vCore-based Cosmos DB, `mongosh` is a powerful tool for monitoring and quick checks.
+
+**Prerequisite:** If `mongosh` crashes with a library error (e.g., `dyld: Library not loaded`), try reinstalling it:
+```bash
+brew reinstall mongosh
+# OR
+brew reinstall icu4c
+```
+
+**Connection Command:**
+```bash
+# Note: The password 'P@ss1234' is URL encoded to 'P%40ss1234'
+mongosh "mongodb+srv://bearlab:P%40ss1234@bearlab-mongodb.global.mongocluster.cosmos.azure.com/?tls=true&authMechanism=SCRAM-SHA-256&retrywrites=false&maxIdleTimeMS=120000"
+```
+
+**Useful Monitoring Commands:**
+
+1.  **Check Database Stats** (Size, Object count):
+    ```javascript
+    use django_store_reviews
+    db.stats()
+    ```
+
+2.  **Count Reviews**:
+    ```javascript
+    db.reviews.countDocuments()
+    ```
+
+3.  **Watch for Real-time Changes** (Live Monitoring):
+    This acts like a `tail -f` for your database. It will print new inserts/updates as they happen.
+    ```javascript
+    db.reviews.watch()
+    ```
+
+4.  **Find Valid Reviews**:
+    ```javascript
+    db.reviews.find({ rating: { $gte: 4 } })
+    ```
+
+### Note on Azure Portal Data Explorer
+For **vCore-based** Cosmos DB for MongoDB, the Data Explorer in the portal currently has limited functionality and may not list documents or collections like the RU-based version does. Use the methods above for data management.

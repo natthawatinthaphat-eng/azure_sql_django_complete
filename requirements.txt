@@ -5,3 +5,4 @@ mssql-django>=1.6
 pyodbc>=5.1.0
 pymongo>=4.4.0
 whitenoise>=6.5.0
+dnspython>=2.6.0
