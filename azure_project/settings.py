@@ -92,9 +92,8 @@ DATABASES = {
         'ENGINE': 'mssql',
         'NAME': 'free-sql-db-2039759',
         'USER': 'folkk-admin',
-        'PASSWORD': 'folk8808',
-        'HOST': 'folkk-admin.database.windows.net
-',
+        'PASSWORD': 'Folk8808',
+        'HOST': 'folkk-admin.database.windows.net',
         'PORT': '1433',
         'OPTIONS': {
             'driver': 'ODBC Driver 18 for SQL Server',

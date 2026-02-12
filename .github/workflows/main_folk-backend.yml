@@ -60,17 +60,11 @@ jobs:
         with:
           name: python-app
       
-      - name: Login to Azure
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_4454B67FAE8941AF98D35A0780CD462E }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_39FF8F2F5468484FBB56626C00E362DD }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_98BE384D5C1842F9AC15F31300D72E81 }}
-
-      - name: 'Deploy to Azure Web App'
+        name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
         with:
           app-name: 'folk-backend'
           slot-name: 'Production'
-          
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: .
